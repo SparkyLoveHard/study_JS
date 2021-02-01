@@ -29,15 +29,15 @@ let budgetMounth = money - (amount1 + amount2);
 console.log('budgetMounth: ', budgetMounth);
 
 // 7 Часть. Зная budgetMonth, посчитать за сколько месяцев будет достигнута цель mission
-let missionMounthComplete = Math.ceil((budgetMounth * 12) / mission); 
-console.log('missionMounthComplete: ', missionMounthComplete);
+// Нужно делить число "сколько хотите заработать" на "месячный бюджет"
+// let missionMounthComplete = mission / budgetMounth; 
+console.log('missionMounthComplete: ', Math.ceil(mission / budgetMounth));
 
 // 8 Часть. Поправить budgetDay учитывая бюджет на месяц, а не месячный доход.
-budgetDay = budgetMounth / 30;
+budgetDay = Math.round(budgetMounth / 30);
 console.log('budgetDay: ', budgetDay);
 
 // 9 Часть. Написать конструкцию условий (расчеты приведены в рублях)
-
 if(budgetDay > 1200) {
 	console.log('У вас высокий уровень дохода');
 } else if(budgetDay > 600 && budgetDay < 1200) {
