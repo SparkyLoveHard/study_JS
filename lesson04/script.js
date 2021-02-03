@@ -86,9 +86,9 @@ function getAddExpenses(arrExpenses) {
 // 7. Почистить консоль логи и добавить недостающие, должны остаться: 
 
 // - Вызовы функции showTypeOf
-// console.log(showTypeOf(money));
-// console.log(showTypeOf(income));
-// console.log(showTypeOf(deposit));
+showTypeOf(money);
+showTypeOf(income);
+showTypeOf(deposit);
 
 // - Расходы за месяц вызов getExpensesMonth
 console.log(getExpensesMonth(amount1, amount2));
