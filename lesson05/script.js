@@ -25,6 +25,12 @@ function start() {
 
 start();
 
+// Спросить у пользователя “Перечислите возможные расходы за рассчитываемый период через запятую”
+addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую?');
+
+// Спросить у пользователя Есть ли у вас депозит в банке?
+deposit = confirm('Есть ли у вас депозит в банке?');
+
 let expenses = [];
 
 // 2. Добавить проверку что введённые данные являются числом, которые мы получаем на вопрос 
@@ -33,13 +39,15 @@ let expenses = [];
 function getExpensesMonth() {
     let sum = 0;
     for (let i = 0; i < 2; i++) {
-        expenses[i] = prompt('Введите обязательную статью расходов?');
-        let amount = +prompt('Во сколько это обойдется?');  
-        if (!isNumber(amount)) {
-            i--;
-        } else {
-            sum += amount;
-        }
+		// Расходы. Во сколько это обойдется?
+		let amount;
+
+		do {
+			// Выполнить. Если условие не выполниться спросить еще раз!
+			expenses[i] = prompt('Введите обязательную статью расходов?');
+			amount = +prompt('Во сколько это обойдется?');  
+		} while(!isNumber(amount));
+		sum += amount;
     }
     console.log(expenses);
     console.log(sum);
@@ -100,3 +108,6 @@ function getAddExpenses(arrExpenses) {
 	result.push(arrExpenses);
 	return arrExpenses;
 }
+
+// - Вывод возможных расходов в виде массива (addExpenses)
+console.log('addExpenses(addExpenses): ', getAddExpenses(addExpenses));
