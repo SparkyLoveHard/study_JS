@@ -7,17 +7,16 @@ let salaryAmount = document.querySelector('.salary-amount');
 let incomeTitle = document.querySelector('.income').getElementsByTagName('input')[0];
 let incomeAmount = document.querySelector('.income-amount');
 let btnPlusIncomeAdd = document.getElementsByTagName('button')[0];
-// Возможный доход ( Input )
-let inputAdditionalIncomeItem1 = document.querySelectorAll('.additional_income-item')[0];
-let inputAdditionalIncomeItem2 = document.querySelectorAll('.additional_income-item')[1];
+// Возможный доход ( Inputs ( collection ))
+let inputAdditionalIncomeItems = document.querySelectorAll('.additional_income-item');
 // Обязательные расходы ( Input ) и ( Button )
 let expensesTitle = document.querySelector('.expenses').getElementsByTagName('input')[0];  
-let expensesAmount = document.querySelector('.expenses-amount'); // expenses-amount
+let expensesAmount = document.querySelector('.expenses-amount'); 
 let btnPlusExpensesAdd = document.getElementsByTagName('button')[1];
 // Возможные расходы (перечислите через запятую ) ( Input )
 let additionalExpensesInput = document.querySelector('.additional_expenses-item');
 // депозит в банке ( CheckBox )
-let btnCheckboxDeposit = document.querySelector('.deposit-checkmark');
+let btnCheckboxDeposit = document.querySelector('#deposit-checkmark');
 // Цель накопить ( Input )
 let targetAmountInput = document.querySelector('.target-amount');
 // Период расчета ( Range )
