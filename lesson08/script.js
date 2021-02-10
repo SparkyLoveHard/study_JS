@@ -72,15 +72,20 @@ let appData = {
 		let sum = 0;
 		for (let i = 0; i < 2; i++) {
 			// Расходы. Во сколько это обойдется?
+			let askExpenses; 
 			let amount;
-			let askExpenses = prompt('Введите обязательную статью расходов?');
 			// 1. Сделать проверку при получении данных:
 			// - сумма дополнительного заработка
+			// Выполнить. Если условие не выполниться спросить еще раз!
 			do {
-				// Выполнить. Если условие не выполниться спросить еще раз!
+				askExpenses = prompt('Введите обязательную статью расходов?');
+			} while(parseInt(askExpenses) || askExpenses === null || askExpenses === '');
+
+			do {				
 				amount = +prompt('Во сколько это обойдется?');  
-				appData.expenses[askExpenses] = amount;
-			} while(!isNumber(amount));
+			} while(!isNumber(amount) );
+
+			appData.expenses[askExpenses] = amount;
 			sum += amount;
 		}
 		return sum;
