@@ -16,7 +16,7 @@ let btnPlusExpensesAdd = document.getElementsByTagName('button')[1];
 // Возможные расходы (перечислите через запятую ) ( Input )
 let additionalExpensesInput = document.querySelector('.additional_expenses-item');
 // депозит в банке ( CheckBox )
-let btnCheckboxDeposit = document.querySelector('#deposit-checkmark');
+let btnCheckboxDeposit = document.querySelector('#deposit-check');
 // Цель накопить ( Input )
 let targetAmountInput = document.querySelector('.target-amount');
 // Период расчета ( Range )
