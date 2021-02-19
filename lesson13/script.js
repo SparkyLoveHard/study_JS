@@ -56,7 +56,6 @@ let appData = {
 	moneyDeposit: 0,
 	// mission: 30000,
 	// period: 3,
-	// Спрашиваем у пользователя “Ваш месячный доход?”
 
 	start: function () {
 		this.budget = +salaryAmount.value;
@@ -100,11 +99,13 @@ let appData = {
 	changeStateInputs: function(disableInputsBoolean) {
 		// обозначаем все инпуты приложения
 			allInputsData.forEach(function(item) {
-			item.disabled = disableInputsBoolean;
+			if(!item.classList.contains('period-select')) {
+				item.disabled = disableInputsBoolean;
+			}	
 		});
 	},
 	// метод функция удаление input в Допополнительных и в Обязательх расходах
-	// сразу через 2 блока инпутов через перемунную одним циклом
+	// сразу через 2 блока инпутов через 1 переменную одним циклом
 	deleteInputs: function (inputsArrDelete) {
 		if (inputsArrDelete.length > 1) {
 			for (let i = 1; i < inputsArrDelete.length; i++) {
