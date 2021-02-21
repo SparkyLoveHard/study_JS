@@ -30,10 +30,7 @@ DomElement.prototype.createElem = function() {
         background-color: ${this.bg};
         font-size: ${this.fontSize}px;
 	`;
-    console.log(newElement.style.cssText);
-    console.log(newElement);
-
-    document.body.appendChild(newElement) //.body.prepend(newElement);
+    document.body.appendChild(newElement);
 };
 
 let newDomElement = new DomElement('.block', 200, 200, '#ff5424', '14');

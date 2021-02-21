@@ -259,23 +259,25 @@ AppData.prototype.inputChangeValue = function() {
 // метод сколько денег накоплено за период
 AppData.prototype.calcPeriod = function() {
 	const _this = this;
-	incomePeriodValue.value = appData.budgetMonth * +rangePeriodSelect.value;
+	incomePeriodValue.value = _this.budgetMonth * +rangePeriodSelect.value;
 	return _this.budgetMonth * +rangePeriodSelect.value;
 };
 
- 
-const appData = new AppData();
-console.log(appData);
-
 // События
-// Событие для кнопки рассчитать
-btnCalculate.addEventListener('click', appData.start.bind(appData));
-// Событие для кнопки скинуть все значения и вернуть программу в исходное состояние
-btnCancel.addEventListener('click', appData.reset.bind(appData));
+AppData.prototype.addAllEventListeners = function() {
+	const _this = this;
+	// Событие для кнопки рассчитать
+	btnCalculate.addEventListener('click', _this.start.bind(_this));
+	// Событие для кнопки скинуть все значения и вернуть программу в исходное состояние
+	btnCancel.addEventListener('click', _this.reset.bind(_this));
 
-btnPlusIncomeAdd.addEventListener('click', appData.addIncomeBlock);
-btnPlusExpensesAdd.addEventListener('click', appData.addExpensesBlock);
-rangePeriodSelect.addEventListener('input', appData.inputChangeValue);
-rangePeriodSelect.addEventListener('input', appData.calcPeriod);
-appData.checkSalaryAmount();
-salaryAmount.addEventListener('input', appData.checkSalaryAmount);
+	btnPlusIncomeAdd.addEventListener('click', _this.addIncomeBlock);
+	btnPlusExpensesAdd.addEventListener('click', _this.addExpensesBlock);
+	rangePeriodSelect.addEventListener('input', _this.inputChangeValue);
+	rangePeriodSelect.addEventListener('input', _this.calcPeriod);
+	_this.checkSalaryAmount();
+	salaryAmount.addEventListener('input', _this.checkSalaryAmount);
+};
+
+const appData = new AppData();
+appData.eventListeners();
