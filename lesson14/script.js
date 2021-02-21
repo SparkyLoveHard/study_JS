@@ -90,10 +90,12 @@ AppData.prototype.reset = function() {
 	periodOutValue.innerHTML = 1;
 	// очищаем все инпуты от значений
 	allAppInputs.forEach(function(item) {
-		item.value = '';
+		if(!item.classList.contains('period-select')) {
+			item.value = '';
+		}
 	});
 	// вернуть в исходное состояние кнопки с булиновым типом
-	this.start.disabled = true;
+	// this.start.disabled = true;
 	btnCheckboxDeposit.checked = false;
 	btnCalculate.disabled = true;
 };
@@ -124,14 +126,13 @@ AppData.prototype.deleteInputs = function (inputsArrDelete) {
 
 // показываем результат в инпутах
 AppData.prototype.showResult = function() {
-	const _this = this;
-	budgetMonthValue.value = _this.budgetMonth;
-	budgetDayValue.value = _this.budgetDay;
-	expensesMonthValue.value = _this.expensesMonth;
-	additionalExpensesValue.value = _this.addExpenses.join(', ');
-	additionalIncomeValue.value = _this.addIncome.join(', ');
-	targetMonthValue.value = _this.getTargetMonth();
-	incomePeriodValue.value = _this.calcPeriod();
+	budgetMonthValue.value = this.budgetMonth;
+	budgetDayValue.value = this.budgetDay;
+	expensesMonthValue.value = this.expensesMonth;
+	additionalExpensesValue.value = this.addExpenses.join(', ');
+	additionalIncomeValue.value = this.addIncome.join(', ');
+	targetMonthValue.value = this.getTargetMonth();
+	incomePeriodValue.value = this.calcPeriod();
 };
 
 // добавляем по клику блок с обязательными расходами
@@ -201,9 +202,8 @@ AppData.prototype.getAddIncome = function() {
 
 // Функция возвращает сумму всех обязательных расходов за месяц
 AppData.prototype.getExpensesMonth = function() {
-	const _this = this;
-	for (let key in _this.expenses) {
-		_this.expensesMonth += _this.expenses[key];
+	for (let key in this.expenses) {
+		this.expensesMonth += this.expenses[key];
 	}
 	// console.log('Расходы за месяц', appData.expensesMonth);
 };
@@ -258,25 +258,23 @@ AppData.prototype.inputChangeValue = function() {
 }; 
 // метод сколько денег накоплено за период
 AppData.prototype.calcPeriod = function() {
-	const _this = this;
-	incomePeriodValue.value = _this.budgetMonth * +rangePeriodSelect.value;
-	return _this.budgetMonth * +rangePeriodSelect.value;
+	incomePeriodValue.value = this.budgetMonth * +rangePeriodSelect.value;
+	return incomePeriodValue.value;
 };
 
 // События
 AppData.prototype.addAllEventListeners = function() {
-	const _this = this;
-	// Событие для кнопки рассчитать
-	btnCalculate.addEventListener('click', _this.start.bind(_this));
-	// Событие для кнопки скинуть все значения и вернуть программу в исходное состояние
-	btnCancel.addEventListener('click', _this.reset.bind(_this));
+	
+	btnCalculate.addEventListener('click', this.start.bind(this));
+	btnCancel.addEventListener('click', this.reset.bind(this));
 
-	btnPlusIncomeAdd.addEventListener('click', _this.addIncomeBlock);
-	btnPlusExpensesAdd.addEventListener('click', _this.addExpensesBlock);
-	rangePeriodSelect.addEventListener('input', _this.inputChangeValue);
-	rangePeriodSelect.addEventListener('input', _this.calcPeriod);
-	_this.checkSalaryAmount();
-	salaryAmount.addEventListener('input', _this.checkSalaryAmount);
+	salaryAmount.addEventListener('input', this.checkSalaryAmount);
+	btnPlusIncomeAdd.addEventListener('click', this.addIncomeBlock);
+	btnPlusExpensesAdd.addEventListener('click', this.addExpensesBlock);
+	rangePeriodSelect.addEventListener('input', this.inputChangeValue.bind(this));
+	rangePeriodSelect.addEventListener('input', this.calcPeriod.bind(this));
+	
+	this.checkSalaryAmount();
 };
 
 const appData = new AppData();
