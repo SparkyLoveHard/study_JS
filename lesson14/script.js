@@ -280,4 +280,4 @@ AppData.prototype.addAllEventListeners = function() {
 };
 
 const appData = new AppData();
-appData.eventListeners();
+appData.addAllEventListeners();
