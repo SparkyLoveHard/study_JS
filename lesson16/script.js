@@ -16,6 +16,9 @@ const btnPlusExpensesAdd = document.getElementsByTagName('button')[1];
 const additionalExpensesInput = document.querySelector('.additional_expenses-item');
 // депозит в банке ( CheckBox )
 const btnCheckboxDeposit = document.querySelector('#deposit-check');
+const depositBank = document.querySelector('.deposit-bank');
+const depositAmount = document.querySelector('.deposit-amount');
+const depositPercent = document.querySelector('.deposit-percent');
 // Цель накопить ( Input )
 const targetAmountInput = document.querySelector('.target-amount');
 // Период расчета ( Range )
@@ -71,6 +74,9 @@ class AppData {
 		this.getExpensesMonth();
 		this.getAddExpenses();
 		this.getAddIncome();
+		this.depositHandler();
+		this.checkValue();
+		this.getInfoDeposit();
 		this.getBudget();
 		this.calcPeriod();
 		this.checkSalaryAmount();
@@ -212,9 +218,10 @@ class AppData {
 	// Функция возвращает Накопления за месяц (Доходы минус расходы)
 	// getAccumulatedMonth переименовать в getBudget 
 	getBudget() {
+		const monthDeposit = this.moneyDeposit * (this.persentDeposit / 100);
 		// appData.budgetMonth - накопления за месяц,appData.budgetDay - накопления за день
 		// Округлить вывод дневного бюджета
-		this.budgetMonth = (this.budget + this.incomeMonth - this.expensesMonth);
+		this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth + monthDeposit;
 		this.budgetDay = (Math.round(this.budgetMonth / 30));
 	}
 
@@ -238,21 +245,6 @@ class AppData {
 		return this.budgetDay;
 	}
 
-	// Годовой процент дипозита
-	getInfoDeposit() {
-		if(this.deposit) {
-			// 1. Сделать проверку при получении данных:
-			// - годовой процент депозита
-			do {
-				this.persentDeposit = parseFloat(prompt('Какой годовой процент?')); // number
-			} while(!isNumber(this.persentDeposit) || this.persentDeposit === null || this.persentDeposit === '');
-			// - сумма депозита
-			do {
-				this.moneyDeposit = parseFloat(prompt('Какая сумма заложена?')); // number
-			} while(!isNumber(this.moneyDeposit) || this.moneyDeposit === null || this.moneyDeposit === '');
-		}
-	}
-
 	// Число под полоской (input type range) должно меняться в зависимости от позиции range
 	inputChangeValue() {
 		periodOutValue.innerHTML = rangePeriodSelect.value;
@@ -265,17 +257,66 @@ class AppData {
 		incomePeriodValue.value = this.budgetMonth * +rangePeriodSelect.value;
 		return incomePeriodValue.value;
 	}
+
+	// Годовой процент дипозита
+	getInfoDeposit() {
+		if(this.deposit) {
+			this.persentDeposit = depositPercent.value;
+			this.moneyDeposit = depositAmount.value;
+		}
+	}
+
+	checkValue() {
+		if (!isNumber(depositAmount.value) || depositAmount.value === '') {
+			alert('Введите корректное число в поле "Сумма"');
+			btnCalculate.removeEventListener('click');
+		}
+		else if (!isNumber(depositPercent.value) || (depositPercent.value < 1 || depositPercent.value > 100)) {
+			alert('Введите корректное число в поле "Процент"');
+			btnCalculate.removeEventListener('click');
+		}
+	}
+
+	changePercent() {
+		const valueSelect = this.value;
+		if (valueSelect === 'other') {
+			depositPercent.value = '';
+			depositPercent.style.display = 'inline-block';
+		} else {
+			depositPercent.style.display = 'none';   
+			depositPercent.value = valueSelect;
+		}
+	}
+
+	depositHandler() {
+		if(btnCheckboxDeposit.checked) {
+			depositBank.style.display = 'inline-block';
+			depositAmount.style.display = 'inline-block';
+			this.deposit = true;
+			depositBank.addEventListener('change', this.changePercent);
+		} else {
+			depositBank.style.display = 'none';
+			depositAmount.style.display = 'none';
+			depositBank.value = '';
+			depositAmount.style.display = '';
+			depositPercent.style.display = '';
+			this.deposit = false;
+			depositBank.removeEventListener('change', this.changePercent);
+		}
+	}
+
 	// События
 	addAllEventListeners() {
 		btnCalculate.addEventListener('click', this.start.bind(this));
 		btnCancel.addEventListener('click', this.reset.bind(this));
-
 		salaryAmount.addEventListener('input', this.checkSalaryAmount);
 		btnPlusIncomeAdd.addEventListener('click', this.addIncomeBlock);
 		btnPlusExpensesAdd.addEventListener('click', this.addExpensesBlock);
 		rangePeriodSelect.addEventListener('input', this.inputChangeValue.bind(this));
 		rangePeriodSelect.addEventListener('input', this.calcPeriod.bind(this));
-			
+
+		btnCheckboxDeposit.addEventListener('change', this.depositHandler.bind(this));
+		depositPercent.addEventListener('change', this.checkValue.bind(this));
 		this.checkSalaryAmount();
 	}
 }
