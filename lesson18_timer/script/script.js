@@ -1,6 +1,6 @@
 'use strict';
 window.addEventListener('DOMContentLoaded', () => {
-	const countTimer = deadline => {
+	function countTimer (deadline) {
 		const timerHours = document.getElementById('timer-hours');
 		const timerMinutes = document.getElementById('timer-minutes');
 		const timerSeconds = document.getElementById('timer-seconds');
@@ -46,6 +46,6 @@ window.addEventListener('DOMContentLoaded', () => {
         } else {
             clearInterval(idInterval);
         }
-	};
+	}
 	countTimer('25 jul 2021');
 });
